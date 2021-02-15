@@ -86,7 +86,7 @@ public class Lab5 extends JFrame implements ActionListener{
 			div = new JButton("/");
 			mod = new JButton("%");
 
-			JButton[] operButtons = 
+			JButton[] operButtons ;
 			add(sum);
 			add(sub);
 			add(mul);

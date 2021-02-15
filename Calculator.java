@@ -33,6 +33,7 @@ public class Calculator {
     //Panel for operations
         JPanel opl = new JPanel();
         windowContent.add("West",opl);
+        opl.setLayout(new GridLayout(4,3));
         char op[] = {'+','-','*','/','%','='};
         for(int i = 0; i < op.length; i++) {
             opbuttons[i]=new JButton(String.valueOf(op[i]));
