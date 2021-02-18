@@ -23,118 +23,121 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Lab5 extends JFrame implements ActionListener{
-	
 
-	class CalcFunc extends JFrame {
-		int sum(int num1, int num2) {
-			return num1 + num2;
-		}
 
-		int mod(int num1, int num2) {
-			return num1 % num2;
-		}
-
-		int subtract(int num1, int num2) {
-			return num1 - num2;
-		}
-
-		int multiply(int num1, int num2) {
-			return num1 * num2;
-		}
-
-		int divide(int num1, int num2) {
-			return num1 / num2;
-		}
+public class Lab5 {
+	static void printf(String str) {
+		System.out.println(str);
+		return;
 	}
+	public class Calculator extends JFrame {
+		private static final long serialVersionUID = 1L;
 
-	public SetActionCommandForJButton(JButton button) {
-
-		//set action listeners for buttons
-		button.addActionListener(this);
-
-		// define a custom short action command for the button
-		button.setActionCommand(button.getText());
-
-		// add button to frame
-		add(button);
-
-	}
-	@Override
-	public void actionPerformed(ActionEvent ae) {
-		String action = ae.getActionCommand();
-		if (action.equals("Geeks")) {
-			System.out.println("Button pressed!");
+		class CalcFunc {
+			int operation(int a, int b, char op) {
+				switch (op) {
+				case '+':
+					return a + b;
+				case '-':
+					return a - b;
+				case '%':
+					return a % b;
+				case '*':
+					return a * b;
+				default:
+					return 0;
+				}
+			}
 		}
-	}
-//https://examples.javacodegeeks.com/desktop-java/swing/jbutton/set-action-command-for-jbutton/
-	class Calculator extends CalcFunc implements KeyListener { // doesn't support multiple extending @ moment.
-		JLabel output = new JLabel();
+
+		class Backend extends CalcFunc implements ActionListener {
+			int n1, n2, r;
+			JTextField res;
+			char op;
+
+			public void SetActionCommandForJButton(JButton button) {
+				// set action listeners for buttons
+				button.addActionListener(this);
+				// define a custom short action command for the button
+				button.setActionCommand(button.getText());
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				String action = ae.getActionCommand();
+				printf(action);
+				if (Character.isDigit(action.charAt(0))) {
+					if (res.getText() != "" || res.getText()!=null) {
+						printf(res.getText());
+						n2 = Integer.parseInt(res.getText());
+						res.setText(action);
+						r = operation(n1, n2, op);
+						res.setText(String.valueOf(r));
+					} else {
+						res.setText(action);	    
+					}
+
+				} else {
+					if (res.getText() != "")
+						n1 = Integer.parseInt(res.getText());
+					op = action.charAt(0);
+					res.setText("");
+				}
+			}
+		}
+
+		// Declaration of all calculator's components.
+		JPanel windowContent;
+		JTextField displayField;
+		JButton numbuttons[];
+		JButton opbuttons[];
+
+		// Constructor creates the components in memory and adds the to the frame using
+		// combination of Borderlayout.
 		Calculator() {
-			setTitle("Calculator");
-			setSize(200, 150);
-			setLocationRelativeTo(null);
+			// Display
+			displayField = new JTextField(30);
+			displayField.setText("");
+			Backend back = new Backend();
+			back.res = displayField;
+			windowContent = new JPanel();
+			numbuttons = new JButton[10];
+			opbuttons = new JButton[6];
+			// Set the layout manager for this panel
+			windowContent.setLayout(new BorderLayout());
+			windowContent.add("North", displayField);
+			// Panel for nos
+			JPanel npl = new JPanel();
+			windowContent.add("West", npl);
+			npl.setLayout(new GridLayout(4, 3));
+			for (int i = 0; i < 10; i++) {
+				numbuttons[i] = new JButton(String.valueOf(i));
+				npl.add(numbuttons[i]);
+				back.SetActionCommandForJButton(numbuttons[i]);
+			}
+			// Panel for operations
+			JPanel opl = new JPanel();
+			windowContent.add("East", opl);
+			opl.setLayout(new GridLayout(4, 3));
+			char op[] = { '+', '-', '*', '%' };
+			for (int i = 0; i < op.length; i++) {
+				opbuttons[i] = new JButton(String.valueOf(op[i]));
+				opl.add(opbuttons[i]);
+				back.SetActionCommandForJButton(opbuttons[i]);
+			}
 
-			setLayout(new FlowLayout());
-			JTextField inputBar = new JTextField(250);
-			add(inputBar);
-
-			JButton sum, sub, mod, mul, div;
-			sum = new JButton("+");
-			sub = new JButton("-");
-			mul = new JButton("*");
-			div = new JButton("/");
-			mod = new JButton("%");
-
-			JButton[] operButtons ;
-			add(sum);
-			add(sub);
-			add(mul);
-			add(div);
-			add(mod);
-
-			// JButton zero, one, two, three, four, five, six, seven, eight, nine;
-			// zero = new JButton("0");
-			// one = new JButton("1");
-			// two = new JButton("2");
-			// three = new JButton("3");
-			// four = new JButton("4");
-			// five = new JButton("5");
-			// six = new JButton("6");
-			// seven = new JButton("7");
-			// eight = new JButton("8");
-			// nine = new JButton("9");
-
-			// add(zero);
-			// add(one);
-			// add(two);
-			// add(three);
-			// add(four);
-			// add(five);
-			// add(six);
-			// add(seven);
-			// add(eight);
-			// add(nine);
-
-			add(output);
+			// Create the frame and set its content pane
+			JFrame frame = new JFrame("Calculator");
+			frame.setContentPane(windowContent);
+			// set the size of the window to be big enough to accomodate all controls.
+			frame.pack();
+			// Finaly, display the window
+			frame.setVisible(true);
 		}
-
-		public void keyPressed(KeyEvent ke) {
-		}
-
-		public void keyReleased(KeyEvent ke) {
-		}
-		public void keyTyped(KeyEvent ke) {
-			output.setText(String.valueOf(ke.getKeyChar()));
-		}
-
 	}
 
 	public static void main(String[] args) {
-
 		Lab5 lab = new Lab5();
 		Calculator calc = lab.new Calculator();
-		calc.setVisible(true);
-
 	}
 }
