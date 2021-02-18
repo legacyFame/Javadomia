@@ -18,19 +18,41 @@
  *         Write a Java program to display all records from a table using Java
  *         Database Connectivity (JDBC).
  */
+/*
+ * 
+ */
+/* Excess 
+ * 
+ * public void SetKeylistener(JTextField res) {
+				res.addKeyListener(this);
+			}
+
+			@Override
+			public void keyPressed(KeyEvent ke) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent ke) {
+			}
+
+			@Override
+			public void keyTyped(KeyEvent ke) {
+				res.setText(String.valueOf(ke));
+			} 
+ */
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
-
+import java.util.Arrays;
 
 public class Lab5 {
 	static void printf(String str) {
 		System.out.println(str);
 		return;
 	}
-	public class Calculator extends JFrame {
+
+	class Calculator extends JFrame {
 		private static final long serialVersionUID = 1L;
 
 		class CalcFunc {
@@ -56,33 +78,34 @@ public class Lab5 {
 			char op;
 
 			public void SetActionCommandForJButton(JButton button) {
-				// set action listeners for buttons
 				button.addActionListener(this);
-				// define a custom short action command for the button
 				button.setActionCommand(button.getText());
 			}
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				String action = ae.getActionCommand();
-				printf(action);
 				if (Character.isDigit(action.charAt(0))) {
-					if (res.getText() != "" || res.getText()!=null) {
-						printf(res.getText());
-						n2 = Integer.parseInt(res.getText());
-						res.setText(action);
-						r = operation(n1, n2, op);
-						res.setText(String.valueOf(r));
-					} else {
-						res.setText(action);	    
-					}
-
-				} else {
-					if (res.getText() != "")
+					if (res.getText().length() > 0) {
 						n1 = Integer.parseInt(res.getText());
+						n2 = Integer.parseInt(action);
+						res.setText(action);
+						if (op != ' ') {
+							r = operation(n1, n2, op);
+//							printf(String.valueOf(r));
+							res.setText(String.valueOf(r));
+							op = ' ';
+						}
+					} else
+						res.setText(action);
+
+				} else
 					op = action.charAt(0);
-					res.setText("");
-				}
+
+			}
+
+			Backend(JTextField displayField) {
+				res = displayField;
 			}
 		}
 
@@ -97,9 +120,7 @@ public class Lab5 {
 		Calculator() {
 			// Display
 			displayField = new JTextField(30);
-			displayField.setText("");
-			Backend back = new Backend();
-			back.res = displayField;
+			Backend back = new Backend(displayField);
 			windowContent = new JPanel();
 			numbuttons = new JButton[10];
 			opbuttons = new JButton[6];
@@ -117,8 +138,8 @@ public class Lab5 {
 			}
 			// Panel for operations
 			JPanel opl = new JPanel();
-			windowContent.add("East", opl);
-			opl.setLayout(new GridLayout(4, 3));
+			windowContent.add("Center", opl);
+			opl.setLayout(new GridLayout(4, 1));
 			char op[] = { '+', '-', '*', '%' };
 			for (int i = 0; i < op.length; i++) {
 				opbuttons[i] = new JButton(String.valueOf(op[i]));
@@ -136,8 +157,77 @@ public class Lab5 {
 		}
 	}
 
+	class Traffic extends JFrame {
+
+		class Backend implements ActionListener {
+			JButton cur, btn;
+			JButton[] lights;
+
+			void colorset(JButton btn, char color) {
+				System.out.println(color);
+				switch (color) {
+				case 'R':
+					btn.setBackground(Color.red);
+				case 'Y':
+					btn.setBackground(Color.yellow);
+				default:
+					btn.setBackground(Color.green);
+				}
+			}
+
+			public void SetActionCommandForJButton(JButton button) {
+				button.addActionListener(this);
+				button.setActionCommand(button.getText());
+				button.setOpaque(true);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				String action = ae.getActionCommand();
+				if (cur != null)
+					cur.setBackground(Color.white);
+				for (int i = 0; i < 3; i++) {
+					if (action == lights[i].getText()) {
+						btn = lights[i];
+						cur = btn;
+						colorset(cur,action.charAt(0));
+						return;
+					}
+				}
+
+			}
+			
+			Backend(JButton[] lights){
+				this.lights = lights;			
+				for(JButton i: lights) {
+					this.SetActionCommandForJButton(i);
+				}
+			}
+
+		}
+        JPanel windowContent;
+        JButton[] lights;
+        char[] light; 
+		Traffic() {
+			JPanel windowContent = new JPanel();
+			windowContent.setLayout(new GridLayout(3,1));
+			char light[] = { 'R', 'Y', 'G' };
+			JButton[] lights = new JButton[3];
+			for (int i = 0; i < light.length; i++) {
+				lights[i] = new JButton(String.valueOf(light[i]));
+				windowContent.add(lights[i]);
+			}
+			Backend back = new Backend(lights);
+			JFrame frame = new JFrame("Traffic");
+			frame.setContentPane(windowContent);
+			frame.pack();
+			frame.setVisible(true);
+		}
+	}
+
 	public static void main(String[] args) {
 		Lab5 lab = new Lab5();
-		Calculator calc = lab.new Calculator();
+//		Calculator calc = lab.new Calculator();
+		Traffic trf = lab.new Traffic();
 	}
 }
