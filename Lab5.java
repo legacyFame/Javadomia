@@ -162,7 +162,6 @@ public class Lab5 {
 		class Backend implements ActionListener {
 			JButton cur, btn;
 			JButton[] lights;
-
 			void colorset(JButton btn, char color) {
 				System.out.println(color);
 				switch (color) {
@@ -170,8 +169,9 @@ public class Lab5 {
 					btn.setBackground(Color.red);
 				case 'Y':
 					btn.setBackground(Color.yellow);
-				default:
+				case 'G':
 					btn.setBackground(Color.green);
+				default: return;
 				}
 			}
 
@@ -179,17 +179,17 @@ public class Lab5 {
 				button.addActionListener(this);
 				button.setActionCommand(button.getText());
 				button.setOpaque(true);
+				button.setBackground(Color.black);
 			}
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				String action = ae.getActionCommand();
 				if (cur != null)
-					cur.setBackground(Color.white);
+					cur.setBackground(Color.black);
 				for (int i = 0; i < 3; i++) {
 					if (action == lights[i].getText()) {
-						btn = lights[i];
-						cur = btn;
+						cur = lights[i];
 						colorset(cur,action.charAt(0));
 						return;
 					}
@@ -227,7 +227,7 @@ public class Lab5 {
 
 	public static void main(String[] args) {
 		Lab5 lab = new Lab5();
-//		Calculator calc = lab.new Calculator();
+		Calculator calc = lab.new Calculator();
 		Traffic trf = lab.new Traffic();
 	}
 }
