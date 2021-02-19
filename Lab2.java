@@ -36,6 +36,7 @@
  
  **/
 
+import java.util.*;
 public class Lab2 {
 
 	protected abstract class Shape {
@@ -43,7 +44,7 @@ public class Lab2 {
 
 		void numberOfSides() {
 			System.out.println(sides);
-		};
+		}
 	}
 
 	class Rectangle extends Shape {
@@ -112,19 +113,19 @@ public class Lab2 {
 		Lab2 lab = new Lab2();
         // System.out.println("Officer's - name,age,phone,address,salary,specialization");
         // Scanner input = new Scanner(System.in);
-        // String[] of1 = input.nextLine().split(" ", 0); //hiro 14 8948943 327 2832 Hacker
+        // String[] of1 = input.nextLine().split(" "); //hiro 14 8948943 327 2832 Hacker
         // Officer of11 = lab.new Officer(of1[0],Integer.parseInt(of1[1]),of1[2],of1[3],of1[4],of1[5]);//"hiro,14,"121323","weqwwe","112234","SSdsd"
         // of11.printSalary();
         // System.out.println("Manager's - name,age,phone,address,salary,department ");
-        // String[] mn1 = input.nextLine().split(" ", 0); //hiro 14 8948943 327 2832 CyberSecurity
-        // Officer mn11 = lab.new Manager(mn1[0],Integer.parseInt(mn1[1]),mn1[2],mn1[3],mn1[4],mn1[5]);
+        // String[] mn1 = input.nextLine().split(" "); //hiro 14 8948943 327 2832 CyberSecurity
+        // Manager mn11 = lab.new Manager(mn1[0],Integer.parseInt(mn1[1]),mn1[2],mn1[3],mn1[4],mn1[5]);
         // mn11.printSalary();
-		// Rectangle rect = lab.new Rectangle();
-		// rect.numberOfSides();
-		// Triangle tria = lab.new Triangle();
-		// tria.numberOfSides();
-		// Hexagon hexa = lab.new Hexagon();
-		// hexa.numberOfSides();
+		Rectangle rect = lab.new Rectangle();
+		rect.numberOfSides();
+		Triangle tria = lab.new Triangle();
+		tria.numberOfSides();
+		Hexagon hexa = lab.new Hexagon();
+		hexa.numberOfSides();
 		// Manager mng = lab.new Manager("Nas", 12, "2032323", "Nowhere", "12229222");
 		// mng.printSalary();
 		// mng.getData();

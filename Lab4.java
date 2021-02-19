@@ -12,14 +12,17 @@
  *         every 1 second. If the value is even, second thread computes the
  *         square of the number and prints. If the value is odd the third thread
  *         will print the value of cube of the number. . **
- *
- */
+ *n Alternative approach java.utl.random .Random.nextInt(100);
+; */
+
+import java.util.Random;
 public class Lab4 {
 
 	class Random extends Thread {
-		int randint;
+		int randint;// Random ran;
 
 		Random() {
+			// this.ran = new Random();
 			start();
 		}
 
@@ -27,6 +30,7 @@ public class Lab4 {
 			int max = 1000;
 			int min = 0;
 			this.randint = (int) (Math.random() * (max - min + 1) + min);
+			// this.randint = ran.nextInt(100);
 			System.out.println(Thread.currentThread().getName() + ": " + randint);
 		}
 
