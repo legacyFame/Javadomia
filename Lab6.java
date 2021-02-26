@@ -18,6 +18,8 @@
  *         algorithm.
  *
  */
+
+import java.util.*;
 public class Lab6 {
 	class DoublyLinkedList {
 		class Node {
@@ -108,21 +110,32 @@ public class Lab6 {
 		}
 		System.out.println("Element not found");
 	}
-
+       
 	public static void main(String[] args) {
 
 		Lab6 lab = new Lab6();
-		int list[] = { 1, 2, 3, 4, 5 };
-		DoublyLinkedList dList = lab.new DoublyLinkedList();
-		for (int number : list) {
-			dList.addNode(number);
+		Scanner in = new Scanner(System.in);
+		System.out.println("Nos");
+		String list[] = in.nextLine().split(" ");
+		int nos[] = new int[list.length];
+		for(int i=0;i<list.length;i++){
+			nos[i]=Integer.parseInt(list[i]);
 		}
-		for (int number : list) {
-			dList.delete(number);
-		}
-		for (int number : list) {
-			bS(list, number);
-		}
+		System.out.print("'no???");
+		int search = in.nextInt();
+		bS(nos,search);
+        
+
+		// DoublyLinkedList dList = lab.new DoublyLinkedList();
+		// for (int number : list) {
+		// 	dList.addNode(number);
+		// }
+		// for (int number : list) {
+		// 	dList.delete(number);
+		// }
+		// for (int number : list) {
+		// 	bS(list, number);
+		// }
 
 	}
 
