@@ -89,27 +89,26 @@ public class Lab6 {
 		}
 	}
 
-	static void bS(int list[], int search) {
+	 static boolean bS(int list[], int search) {
 		int u = 0;
 		int m;
 		int v = list.length;
 		while (u < v) {
 			m = (u + v) / 2;
-			if (list[m] == search) {
-				System.out.println("Element found:"+search);
-				return;
-			} else if (search > list[m]) {
+			if (list[m] == search) 
+				return true;
+			else if (search > list[m]) 
 				u = m + 1;
-			} else {
+			else 
 				v = m - 1;
-			}
+		
 		}
-		if (list[v] == search) {
-			System.out.println("Element found:"+search);
-			return;
-		}
-		System.out.println("Element not found");
-	}
+        v--;
+		if (list[v] == search) 
+			return true;
+		return false;
+	} 
+    p
        
 	public static void main(String[] args) {
 

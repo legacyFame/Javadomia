@@ -1,0 +1,46 @@
+package com.codility.tasks.hibernate.solution;
+import org.springframework.stereotype.Service;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.*;
+import javax.persistence.*;
+import org.hibernate.annotations.Formula;
+// import javax.persistence.Entity;
+// import javax.persistence.EntityManager;
+// import javax.persistence.Id;
+// import javax.persistence.Table;
+// import javax.persistence.Column;
+// import javax.persistence.Formula;
+import java.util.List;
+
+@Entity
+@Table(name = "person_data")
+class Person {
+   @Id //@GeneratedValue
+   @Column(name = "id", nullable = false)
+   private long id;
+
+   @Column(name = "first_name", nullable = false)
+   private String firstName;
+
+   @Column(name = "last_name", nullable = false)
+   private String lastName;
+   
+   //@Formula( "CONCAT_WS( ' ', firstName, lastName ) " )
+   @Formula(value = " concat(first_name, ' ', last_name) ")
+   private String fullName;
+   
+   public String getFullName() {
+        return fullName;//firstName+lastName;
+    }
+}
+@Configuration
+class PersonService {
+    @Autowired
+    private JpaRepository personRepo;
+    @Bean
+    List<Person> findAll() {
+       return personRepo.findAll();//session.createQuery("SELECT * FROM person_data", Person.class).getResultList();
+    }
+
+}
