@@ -15,6 +15,7 @@
  
  	One row element of first matrix is multiplied by all columns of second matrix.
  */
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -36,10 +37,10 @@ public class Lab1 {
 
 	static void frequency() {
 		System.out.println("Type a word");
-		String str = new Scanner(System.in).nextLine();
-
+		Scanner input = new Scanner(System.in)
+		String str = input.nextLine();
 		System.out.println("Type a char");
-		char chari = new Scanner(System.in).nextLine().charAt(0);
+		char chari = input.nextLine().charAt(0);
 		int count = 0;
 		for (int i = 0; i < str.length(); i++) {
 			if (chari == str.charAt(i))
